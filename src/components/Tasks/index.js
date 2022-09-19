@@ -1,10 +1,13 @@
 import React from 'react';
+import Task from './Task'
+
+import './styles.scss';
 
 const Tasks = () => (
 
-<div>
-    Tasks
-</div>
+<ul className="todo-list">
+    <Task/>
+</ul>
 
 
 );
