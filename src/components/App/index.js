@@ -3,7 +3,7 @@ import React from 'react';
 import Counter from '../Counter';
 import Tasks from '../Tasks';
 import Form from '../Form';
-
+import data from '../../data/tasks.js'; 
 import './styles.scss';
 
 // == Composant
@@ -22,8 +22,8 @@ const App = () => (
       }}
 
     />
-    <Counter total={0}/>
-    <Tasks/>
+    <Counter total={data.length}/>
+    <Tasks list = {data}/>
     
   </div>
 );
