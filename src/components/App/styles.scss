@@ -1,0 +1,12 @@
+@use 'src/styles/styles';
+
+
+body {
+    background-color: styles.$color-main;
+    color: #fff;
+  }
+
+.app {
+    width: 500px;
+    margin: 1em auto;
+  }

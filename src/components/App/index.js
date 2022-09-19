@@ -1,11 +1,18 @@
 // == Import npm
 import React from 'react';
+import Counter from '../Counter';
+import Tasks from '../Tasks';
+import Form from '../Form';
+
+import './styles.scss';
 
 // == Composant
 const App = () => (
-  <div >
+  <div className='app'>
+    <Form/>
+    <Counter/>
+    <Tasks/>
     
-    <h1>Composant : App</h1>
   </div>
 );
 
