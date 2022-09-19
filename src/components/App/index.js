@@ -9,7 +9,17 @@ import './styles.scss';
 // == Composant
 const App = () => (
   <div className='app'>
-    <Form/>
+    <Form 
+      todoLabel ="test"
+      onLabelChange={(textesaisi)=>{
+        console.log(textesaisi);
+      }}
+
+      onTodoSubmit={()=>{
+        console.log('Hey,  submit');
+      }}
+
+    />
     <Counter/>
     <Tasks/>
     
