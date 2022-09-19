@@ -10,7 +10,9 @@ import './styles.scss';
 const App = () => (
   <div className='app'>
     <Form 
+      
       todoLabel ="test"
+      
       onLabelChange={(textesaisi)=>{
         console.log(textesaisi);
       }}
@@ -20,7 +22,7 @@ const App = () => (
       }}
 
     />
-    <Counter/>
+    <Counter total={0}/>
     <Tasks/>
     
   </div>
