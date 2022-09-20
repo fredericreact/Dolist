@@ -41,7 +41,8 @@ const handleSubmit =() =>{
 
   UpdateState(
     {...currentState,
-      todos:[newTodo, ...todos]
+      todos:[newTodo, ...todos],
+      formText: '',
     }
   )
 
