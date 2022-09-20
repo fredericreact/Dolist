@@ -6,8 +6,10 @@ const Task = (props) => {
 
 const {done, label, onTodoCheck, id} = props;
 
+const classToUse = done ? 'task task--done' : 'task';
+
 return (
-<li className='task'>
+<li className={classToUse}>
     <input 
     type="checkbox" 
     checked={done}

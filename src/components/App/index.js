@@ -73,6 +73,8 @@ const newTodos = todos.map((todoObject)=>{
 }
 
 
+const totalNotDone = todos.filter((todoObject)=>  !todoObject.done).length;
+
 
 return (
   <div className='app'>
@@ -85,7 +87,7 @@ return (
       onTodoSubmit={handleSubmit}
 
     />
-    <Counter total={data.length}/>
+    <Counter total={totalNotDone}/>
     <Tasks list = {todos} onTodoCheck={handleCheckTodo}/>
     
   </div>
