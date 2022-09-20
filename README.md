@@ -1,70 +1,152 @@
-# Getting Started with Create React App
+# Destructuration
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+    todoObject = { id: 1, label: 'texte de la todo", done: true }
 
-## Available Scripts
+La syntaxe de destructuration 
 
-In the project directory, you can run:
+    { ...todoObject }
 
-### `npm start`
+quand je l'utilise sur un composant, va me permettre de créer autant de props qu'il y a de propriétés dans l'objet
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+    <Task key={todoObject.id} id={1} label='texte de la todo' done={true}>
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+# Generate ID
 
-### `npm test`
+    npm install uuid
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `npm run build`
+# Programmation déclarative
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+La programmation déclarative repose sur 2 principes, relativement simples, qui ne varient JAMAIS.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+1. Les datas (données) controlent le comportement
+2. Les fonctions ne modifient JAMAIS les données (elles renvoient plutôt de nouvelles données)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
+### Pourquoi suivre ces règles
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### Point N° 1 -> Les données contrôlent le comportement
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Cela permet de s'assurer d'avoir un comportement toujours prévisible. Si j'exécute plusieurs fois une même fonction avec les mêmes paramètres (ou données) alors je sais avec certitude que j'obtiendrais toujours le même résultat.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+```javascript
 
-## Learn More
+// Fonction qui respecte la règle N° 1
+const multiply = (num1, num2) => num1 * num2
+// Cette fonction, si je lui donne num1 (3) et num2 (4) me renverra toujours 12
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+// Exemple de fonction qui ne respecte pas le principe de la règle numéro 1
+const index = 0;
 
-### Code Splitting
+const multiply = (num1, num2) => {
+  const total = num1 * num2 * index;
+  index++;
+  return total;
+};
+// Cette fonction, si je lui donne num1 (3) et num2 (4) me renverra toujours 12
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+```
 
-### Analyzing the Bundle Size
+### Point N°2 -> Les fonctions ne modifient jamais les données (originales)
+C'est du READ-Only...
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+Là également, le but de cette règle est de s'assurer un comportement 100% prévisible. Je sais que si j'obtiens des résultats en donnant des données à une fonction, les données originelles existent toujours, et le résultat existe "à part", je ne remplace ou n'écrase rien, je ne fais que renvoyer de nouvelles données.
 
-### Making a Progressive Web App
+```javascript
+// bon exemple
+const liste = [1, 2, 3, 4];
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+const resultat = liste.map((number) => number * 2 );
+// resultat -> [2, 4, 6, 8];
+// MAIS je n'ai pas modifié le contenu de liste !!!
+// liste est toujours accessible et contient toujours
+// les mêmes données
 
-### Advanced Configuration
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+// Pas biiieeeen
 
-### Deployment
+for (i=0; i < liste.length; i++){
+  // Ici j'écrase, index après index, chaque élément
+  // de mon tableau original
+  liste[i] = liste[i] * 2;
+}
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
 
-### `npm run build` fails to minify
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+### Assignation par copie, et assignation par référence
+
+![image](https://user-images.githubusercontent.com/104289891/191297902-ec54ad2d-3246-4732-86e7-a89d8e2b0198.png)
+
+
+
+### Exemple 1
+
+!!!!!!!!! IMPORTAAAAAAAAAAANNNNNNTTTTTT!!!!!!!!
+
+Pour éviter des erreurs quasiement IMPOSSIBLES à debbuger
+IL est STRICTEMENT INTERDIT de modifier des infos du state directement. 
+Quand on le modifiera, on le fera TOUJOURSavec de nouveaux objets / tableaux.
+JE commence par fabriquer un nouvel objet qui représente ma nouvelle todo.
+
+
+Si je traduis la ligne ci dessous en francais je dis:
+modifie le state (setState), dans la propriété "todos" ({todos: ///})
+je veux désormais un nouveau tableau (todos: [...])
+qui contient tout ce que contenait l'original (todos: [...original])
+et j'y rajoute la todo nouvellement crée [newTodo, ...todos]
+
+
+    const [currentState, UpdateState] =useState(
+    {
+    todos: data,
+    formText:'',
+
+    });
+
+<br>
+
+    const handleSubmit =() =>{
+
+    const newTodo = {
+    id: uuidv4(),
+    label: formText,
+    done:false,
+    }
+
+    UpdateState(
+    {...currentState,
+      todos:[newTodo, ...todos]
+    }
+    )
+
+    }
+
+
+### Exemple 2
+
+    const handleCheckTodo = (idclique) => {
+    
+    
+    const newTodos = todos.map((todoObject)=>{
+      if (todoObject.id === idclique) {
+        return {
+          ...todoObject,
+          done: !todoObject.done,
+        };
+      }
+    
+      return todoObject;
+    
+    })
+    
+      UpdateState(
+        {...currentState,
+          todos: newTodos
+        }
+      )
+    
+    
+    }
