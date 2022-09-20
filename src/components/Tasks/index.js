@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 
 const Tasks = (props) => {
 
-const {list} = props;
+const {list, onTodoCheck} = props;
 
 return (
     
@@ -15,7 +15,7 @@ return (
 <ul className="todo-list">
 {
     list.map((todoObject)=> (
-        <Task key ={todoObject.id} {...todoObject}/>
+        <Task key ={todoObject.id} {...todoObject} onTodoCheck={onTodoCheck}/>
     ))
 }
 </ul>
@@ -31,6 +31,7 @@ Tasks.propTypes ={
             id: PropTypes.string.isRequired,
         }),
     ).isRequired,
+    onTodoCheck: PropTypes.func.isRequired,
 };
 
 export default Tasks;

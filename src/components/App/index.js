@@ -48,7 +48,9 @@ const handleSubmit =() =>{
 
 }
 
-
+const handleCheckTodo = (id) => {
+  console.log(id);
+}
 
 
 
@@ -64,7 +66,7 @@ return (
 
     />
     <Counter total={data.length}/>
-    <Tasks list = {todos}/>
+    <Tasks list = {todos} onTodoCheck={handleCheckTodo}/>
     
   </div>
 );
