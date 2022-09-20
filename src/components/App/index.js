@@ -48,8 +48,28 @@ const handleSubmit =() =>{
 
 }
 
-const handleCheckTodo = (id) => {
-  console.log(id);
+const handleCheckTodo = (idclique) => {
+
+
+const newTodos = todos.map((todoObject)=>{
+  if (todoObject.id === idclique) {
+    return {
+      ...todoObject,
+      done: !todoObject.done,
+    };
+  }
+
+  return todoObject;
+
+})
+
+  UpdateState(
+    {...currentState,
+      todos: newTodos
+    }
+  )
+
+
 }
 
 
